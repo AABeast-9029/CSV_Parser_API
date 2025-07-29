@@ -47,21 +47,18 @@ namespace CSV_Parse_API.Controllers
 
                     if (!DateTime.TryParse(columns[0], out var date) || date < new DateTime(2000, 1, 1) || date > DateTime.UtcNow)
                     {
-                        Console.WriteLine($"Проверяем дату: {columns[0]}");
-                        return BadRequest("Дата недопустима.");
+                        return BadRequest("Дата недопустима. Файл не валидный.");
                     }
 
                     if (!double.TryParse(columns[1], out var executionTime) || executionTime < 0)
                     {
-                        Console.WriteLine($"Проверяем время выполнения: {columns[1]}");
-                        return BadRequest("Время выполнения недопустимо.");
+                        return BadRequest("Время выполнения недопустимо. Файл не валидный.");
                     }
 
 
                     if (!double.TryParse(columns[2], out var value) || value < 0)
                     {
-                        Console.WriteLine($"Проверяем значение: {columns[2]}");
-                        return BadRequest("Значение недопустимо.");
+                        return BadRequest("Значение в столбце Value недопустимо. Файл не валидный.");
                     }
 
                     values.Add(new Models.Values { Date = date.ToUniversalTime(), ExecutionTime = executionTime, Value = value, FileName = file.FileName });
